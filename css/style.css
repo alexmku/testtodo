@@ -1,0 +1,100 @@
+html {
+  height: 100%;
+}
+
+body {
+  font-size: 20px;
+  cursor: default;
+  min-height: 100%;
+  color: black;
+  line-height: 1.3;
+  background: #eaeaea;
+}
+
+.content {
+  padding: 5% 10%;
+  width: 35%;
+}
+
+.line {
+  margin-bottom: 15px;
+}
+
+
+.line--field {
+  padding: 5px;
+  width: 50%;
+}
+
+.line--add {
+  padding: 5px;
+}
+
+
+
+
+.list--item {
+  padding-bottom: 15px;
+  cursor: pointer;
+}
+
+
+.list--completed {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.list--completed[checked] + .list--name {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.list--name {
+  display: inline-block;
+  margin: 0 0.5em 0 0.2em;
+}
+
+.list--delete {
+  display: none;
+}
+
+.list--item:hover .list--delete {
+  display: inline-block;
+}
+
+.list--edit {
+  display: none;
+  width: 100%;
+}
+
+
+
+
+.list--item.__edit .list--name-inner {
+  display: none;
+}
+
+.list--item.__edit .list--edit {
+  display: block;
+}
+
+.list--item.__edit .list--delete {
+  display: none;
+}
+
+
+
+
+.selector {
+  border: 1px solid grey;
+  display: inline-block;
+  padding: 5px 15px;
+  margin-top: 20px;
+}
+
+
+
+
+input {
+  padding: 5px;
+}
