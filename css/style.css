@@ -39,12 +39,12 @@ body {
 }
 
 
-.list--completed {
+.list--status {
   display: inline-block;
   margin-right: 10px;
 }
 
-.list--completed[checked] + .list--name {
+.list--status[checked] + .list--name {
   color: grey;
   text-decoration: line-through;
 }
@@ -79,6 +79,19 @@ body {
 }
 
 .list--item.__edit .list--delete {
+  display: none;
+}
+
+
+
+
+
+
+.list.__active .list--item.__completed {
+  display: none;
+}
+
+.list.__completed .list--item.__active {
   display: none;
 }
 

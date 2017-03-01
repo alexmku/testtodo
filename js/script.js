@@ -43,6 +43,7 @@ function todo_obj() {
 
 
     this.add = function(field) {
+        this.retrieve();
         var newtask = new task_obj(field, false);
         list.push(newtask);
         this.update();
@@ -72,14 +73,15 @@ function todo_obj() {
 
 
     this.showactive = function() {
-        this.retrieve();
+        /*this.retrieve();
         var newlist = [];
         list.forEach(function (itemtask, i) {
             if (!itemtask.completed)
                 newlist.push(itemtask);
         });
         list = newlist;
-        this.visualupdate();
+        this.visualupdate();*/
+
     }
 
     this.showcompleted = function() {
@@ -105,10 +107,16 @@ function task_obj(name, status) {
 
   this.set = function(i) {
     var ullist = document.getElementsByClassName("list");
-    var checked;
-    if (this.completed) checked = '<input type="checkbox" class="list--completed" value="1" checked data-id=' + i + '>';
-        else checked = '<input type="checkbox" class="list--completed" value="0" data-id=' + i + '>';
-    var newstring = '<li class="list--item"' + 'data-id=' + i + '>' +
+    var checked, statusclass = '';
+    if (this.completed) {
+        checked = '<input type="checkbox" class="list--status" value="1" checked data-id=' + i + '>';
+        statusclass = ' __completed'
+    }
+        else {
+            checked = '<input type="checkbox" class="list--status" value="0" data-id=' + i + '>';
+            statusclass = ' __active';
+        }
+    var newstring = '<li class="list--item' + statusclass + '"' + 'data-id=' + i + '>' +
                         checked + 
                         '<div class="list--name">' + 
                             '<div class="list--name-inner" data-id=' + i + '>' +  name + '</div>' +
@@ -131,7 +139,16 @@ function task_obj(name, status) {
 
 document.getElementsByClassName('line--add')[0].onclick = function(){
     todolist.add(document.getElementsByClassName("line--field")[0].value);
+    document.getElementsByClassName('line--field')[0].value = '';
 };
+
+document.getElementsByClassName('line--field')[0]
+    .addEventListener('keyup', function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13) {
+        document.getElementsByClassName('line--add')[0].click();
+    }
+});
 
 
 // task controls -------
@@ -140,11 +157,15 @@ document.getElementsByClassName('list')[0].onclick = function(e){
     if (e.target.className == 'list--delete')
         todolist.delete(e.target.getAttribute('data-id'));
 
-    if (e.target.className == 'list--completed' && e.target.hasAttribute('checked'))
+    if (e.target.className == 'list--status' && e.target.hasAttribute('checked')){
         todolist.uncompleted(e.target.getAttribute('data-id'));
+        //e.target.parentElement.classList.remove('__completed');
+    }
 
-    if (e.target.className == 'list--completed' && !e.target.hasAttribute('checked'))
+    if (e.target.className == 'list--status' && !e.target.hasAttribute('checked')){
         todolist.completed(e.target.getAttribute('data-id'));
+        //e.target.parentElement.classList += ' __completed';
+    }
 };
 
 
@@ -172,16 +193,19 @@ window.onclick = function(e) {
 // task selector -------
 
 document.getElementById('all').onclick = function(e){
-    todolist.retrieve();
-    todolist.visualupdate();
+    var cl = document.getElementsByClassName('list')[0].classList;
+    cl.remove('__active');
+    cl.remove('__completed');
 };
 
 document.getElementById('active').onclick = function(e){
-    todolist.showactive();
+    document.getElementsByClassName('list')[0].classList.remove('__completed');
+    document.getElementsByClassName('list')[0].classList += ' __active';
 };
 
 document.getElementById('completed').onclick = function(e){
-    todolist.showcompleted();
+    document.getElementsByClassName('list')[0].classList.remove('__active');
+    document.getElementsByClassName('list')[0].classList += ' __completed';
 };
 
 
