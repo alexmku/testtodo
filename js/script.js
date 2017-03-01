@@ -71,30 +71,6 @@ function todo_obj() {
 
 
 
-
-    this.showactive = function() {
-        /*this.retrieve();
-        var newlist = [];
-        list.forEach(function (itemtask, i) {
-            if (!itemtask.completed)
-                newlist.push(itemtask);
-        });
-        list = newlist;
-        this.visualupdate();*/
-
-    }
-
-    this.showcompleted = function() {
-        this.retrieve();
-        var newlist = [];
-        list.forEach(function (itemtask, i) {
-            if (itemtask.completed)
-                newlist.push(itemtask);
-        });
-        list = newlist;
-        this.visualupdate();
-    }
-
 }
 
 
@@ -159,12 +135,10 @@ document.getElementsByClassName('list')[0].onclick = function(e){
 
     if (e.target.className == 'list--status' && e.target.hasAttribute('checked')){
         todolist.uncompleted(e.target.getAttribute('data-id'));
-        //e.target.parentElement.classList.remove('__completed');
     }
 
     if (e.target.className == 'list--status' && !e.target.hasAttribute('checked')){
         todolist.completed(e.target.getAttribute('data-id'));
-        //e.target.parentElement.classList += ' __completed';
     }
 };
 
